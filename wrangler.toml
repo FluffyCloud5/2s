@@ -1,0 +1,18 @@
+# 2s.au: the short address inside the QR codes. It forwards to the site.
+name = "2s"
+main = "src/worker.js"
+compatibility_date = "2025-09-01"
+workers_dev = false
+routes = [{ pattern = "2s.au", custom_domain = true }]
+
+[vars]
+TARGET_ORIGIN = "https://tada2you.com"
+
+# Named environments inherit nothing from [vars] or routes: repeat every setting.
+[env.staging]
+name = "2s-staging"
+workers_dev = false
+routes = [{ pattern = "staging.2s.au", custom_domain = true }]
+
+[env.staging.vars]
+TARGET_ORIGIN = "https://staging.tada2you.com"
