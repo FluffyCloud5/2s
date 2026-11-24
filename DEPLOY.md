@@ -6,7 +6,7 @@ For the person who deploys, on their own computer and Cloudflare account. Nothin
 
 1. `npm ci`, then `npx wrangler login`.
 2. The zone `2s.au` must be in the same Cloudflare account. `wrangler.toml` attaches `staging.2s.au` and `2s.au` as custom domains, so Cloudflare creates the DNS records and certificates at the first deployment.
-   A custom domain cannot be attached over an existing record. On 24 November 2026 `2s.au` and `www.2s.au` still answered from the registrar's parking page (A `207.207.210.107` and `207.207.210.229`, CNAME `pixie.porkbun.com`; `https://2s.au` failed its TLS handshake), while `staging.2s.au` was already the Worker. Before the first production deployment, delete those parking records in the zone's DNS, then check `dig +short 2s.au` shows Cloudflare addresses after deploying.
+   On 24 November 2026 `2s.au` still showed the registrar's parking page: its A records pointed to `207.207.210.107` and `207.207.210.229`, and `https://2s.au` failed its TLS handshake. `staging.2s.au` was already this Worker. At the first production deployment wrangler finds those records on `2s.au` and asks whether to point them at the Worker instead: answer yes, or delete them in the zone's DNS beforehand. Afterwards `dig +short 2s.au` must show Cloudflare addresses. `www.2s.au` (a CNAME to the same parking page) is not part of this Worker; delete that record too, so that a typed `www.` address does not land on the parking page.
 3. In the zone's SSL/TLS settings, keep **Always Use HTTPS** off and do not enable HSTS. A printed code may hold the address without `https://`; the Worker must answer plain `http://` itself, so that such a code costs one hop and not two.
 
 There are no secrets, no database and no bindings.
