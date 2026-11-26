@@ -32,7 +32,7 @@ const cases = [
     ['GET', 'https://2s.au/health', { TARGET_ORIGIN: 'https://tada2you.com/path' }, 500, null],
     ['GET', 'https://2s.au/health', { TARGET_ORIGIN: 'javascript:alert(1)' }, 500, null],
     ['GET', 'https://2s.au/abcde', {}, 500, null],
-    ['GET', 'https://2s.au/robots.txt', {}, 200, null, /^User-agent: \*\nDisallow: \/\n$/]
+    ['GET', 'https://2s.au/robots.txt', {}, 200, null, /^User-agent: \*\nAllow: \/\n$/]
 ];
 
 for (const [method, address, settings, status, location, body] of cases) {

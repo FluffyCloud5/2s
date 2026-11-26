@@ -19,7 +19,10 @@ export default {
         if (request.method !== 'GET' && !head) return reply('Method not allowed\n', 405, { allow: 'GET, HEAD' });
 
         const { pathname } = new URL(request.url);
-        if (pathname === '/robots.txt') return reply('User-agent: *\nDisallow: /\n', 200, { 'content-type': 'text/plain; charset=utf-8' });
+        // Every bot may follow a link (Kieran, 25 November): a chat app that
+        // obeys robots.txt then shows the card's preview for a 2s.au link
+        // shared by hand. x-robots-tag still keeps the links out of searches.
+        if (pathname === '/robots.txt') return reply('User-agent: *\nAllow: /\n', 200, { 'content-type': 'text/plain; charset=utf-8' });
         const target = targetOrigin(env);
         if (pathname === '/health') {
             return reply(JSON.stringify({ ok: !!target, target }) + '\n', target ? 200 : 500, { 'content-type': 'application/json; charset=utf-8' });
