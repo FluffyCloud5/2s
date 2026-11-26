@@ -9,7 +9,7 @@ It is one small Cloudflare Worker with no database, no cookies and nothing store
 | `GET` or `HEAD` `/<ending>` (letters, digits, hyphen, up to 32) | 302 to `TARGET_ORIGIN/<ending in lower case>` |
 | `/` | 302 to `TARGET_ORIGIN/` |
 | `/health` | 200 with the target; 500 if `TARGET_ORIGIN` is missing or malformed |
-| `/robots.txt` | disallow all |
+| `/robots.txt` | allow all bots, so chat apps show a shared link's preview |
 | anything else | 404; other methods 405 |
 
 - The answer is always 302, never 301, so the destination can change later.
